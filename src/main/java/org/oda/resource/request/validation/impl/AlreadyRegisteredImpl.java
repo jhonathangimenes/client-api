@@ -2,7 +2,7 @@ package org.oda.resource.request.validation.impl;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.oda.repository.ClientRepository;
+import org.oda.repository.UserRepository;
 import org.oda.resource.request.validation.AlreadyRegistered;
 
 public class AlreadyRegisteredImpl implements ConstraintValidator<AlreadyRegistered, String> {
@@ -13,7 +13,7 @@ public class AlreadyRegisteredImpl implements ConstraintValidator<AlreadyRegiste
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        ClientRepository clientRepository = new ClientRepository();
-        return clientRepository.getByEmail(value) == null;
+        UserRepository userRepository = new UserRepository();
+        return userRepository.getByEmail(value) == null;
     }
 }

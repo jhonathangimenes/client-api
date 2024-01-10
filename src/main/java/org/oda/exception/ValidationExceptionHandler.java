@@ -7,9 +7,9 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 import org.oda.resource.response.ResponseError;
-import org.oda.resource.response.ResponseErrorViolation;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,9 +18,14 @@ public class ValidationExceptionHandler implements ExceptionMapper<ConstraintVio
     @Override
     public Response toResponse(ConstraintViolationException exception) {
         Set<ConstraintViolation<?>> violations = exception.getConstraintViolations();
-        List<ResponseErrorViolation> responseViolations = violations.stream()
-                .map(violation -> new ResponseErrorViolation(captureNameField(violation.getPropertyPath()), violation.getMessageTemplate()))
-                .collect(Collectors.toList());
+        Set<Map<String, String>> responseViolations = violations.stream()
+                .map(violation -> {
+                    Map<String, String> violationMap = new HashMap<>();
+                    violationMap.put("field", captureNameField(violation.getPropertyPath()));
+                    violationMap.put("message", violation.getMessageTemplate());
+                    return violationMap;
+                })
+                .collect(Collectors.toSet());
         return Response.status(Response.Status.BAD_REQUEST)
                 .entity(new ResponseError<>("Constraint violation", responseViolations))
                 .build();
