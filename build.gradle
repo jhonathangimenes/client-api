@@ -16,6 +16,7 @@ dependencies {
     implementation "io.quarkus:quarkus-resteasy-reactive-jackson"
     implementation "io.quarkus:quarkus-mongodb-panache"
     implementation "io.quarkus:quarkus-hibernate-validator"
+    implementation "io.rest-assured:rest-assured:5.3.1"
 
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'

@@ -1,6 +1,9 @@
 package org.oda.resource.request;
 
+import org.oda.resource.request.validation.AlreadyRegisteredDescriptionAddress;
+
 public class AddAddressRequest {
+    @AlreadyRegisteredDescriptionAddress
     private String description;
     private String address;
     private String number;

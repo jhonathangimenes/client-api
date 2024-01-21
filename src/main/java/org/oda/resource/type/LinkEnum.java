@@ -1,4 +1,4 @@
-package org.oda.type;
+package org.oda.resource.type;
 
 public enum LinkEnum {
     SELF("self", "GET"),
